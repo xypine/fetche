@@ -1,0 +1,16 @@
+# Rust
+/target
+
+# Devenv
+.devenv*
+devenv.local.nix
+
+# direnv
+.direnv
+
+# Database
+*.sqlite3
+*.sqlite3-*
+
+# pre-commit
+.pre-commit-config.yaml

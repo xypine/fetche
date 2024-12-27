@@ -1,0 +1,41 @@
+[[configs]]
+source_url = "https://hac.oispahalla.com/api/stats"
+# Check for new data every minute
+fetch_interval_s = 30
+try_parse_json = true
+
+[[configs]]
+source_url = "https://analytics.oispahalla.com/api/stats"
+# Check for new data every minute
+fetch_interval_s = 60
+try_parse_json = true
+
+[[configs]]
+source_url = "https://analytics.oispahalla.com/api/error"
+# Check for new data every minute
+fetch_interval_s = 60
+try_parse_json = true
+
+[[configs]]
+source_url = "https://analytics.oispahalla.com/api/1"
+# Check for new data every minute
+fetch_interval_s = 2
+try_parse_json = true
+
+[[configs]]
+source_url = "https://analytics.oispahalla.com/api/2"
+# Check for new data every minute
+fetch_interval_s = 60
+try_parse_json = true
+
+[[configs]]
+source_url = "https://analytics.oispahalla.com/api/3"
+# Check for new data every minute
+fetch_interval_s = 60
+try_parse_json = true
+
+[[configs]]
+source_url = "https://analytics.oispahalla.com/api/4"
+# Check for new data every minute
+fetch_interval_s = 60
+try_parse_json = true
