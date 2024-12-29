@@ -88,3 +88,46 @@ impl PartialEq for FetchRecord {
             && self.from_db == other.from_db;
     }
 }
+
+impl From<FetchRecord> for PublicFetchRecord {
+    fn from(val: FetchRecord) -> Self {
+        let data = match (val.valid_json, val.body_text) {
+            (Some(true), Some(txt)) => Some(match serde_json::from_str(&txt) {
+                Ok(v) => PublicFetchRecordBody::Json(v),
+                _ => PublicFetchRecordBody::PlainText(txt),
+            }),
+            (_, Some(txt)) => Some(PublicFetchRecordBody::PlainText(txt)),
+            _ => None,
+        };
+        PublicFetchRecord {
+            config: val.config,
+            fetched_at: val.fetched_at,
+            created_at: val.created_at,
+            source_url: val.source_url,
+            status: val.status,
+            data,
+            from_db: val.from_db,
+        }
+    }
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct PublicFetchRecord {
+    #[serde(with = "i64_as_string")]
+    pub config: ConfigHash,
+    pub fetched_at: Timestamp,
+    pub created_at: Timestamp,
+    pub source_url: String,
+    pub status: Status,
+    pub data: Option<PublicFetchRecordBody>,
+    /// actual record or a result of decompression?
+    pub from_db: bool,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub enum PublicFetchRecordBody {
+    #[serde(rename = "plain_text")]
+    PlainText(String),
+    #[serde(rename = "json")]
+    Json(serde_json::Value),
+}

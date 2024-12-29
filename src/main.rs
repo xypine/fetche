@@ -8,7 +8,7 @@ use db::{
 use jiff::Timestamp;
 use models::{
     config::{Config, ConfigHash, FetcheConfig, RawConfigHash},
-    fetch_result::{FetchRecord, RawFetchRecord, Status},
+    fetch_result::{FetchRecord, PublicFetchRecord, RawFetchRecord, Status},
 };
 use sqlx::SqlitePool;
 use tokio_cron_scheduler::{Job, JobScheduler};
@@ -188,7 +188,7 @@ async fn tick(db: &SqlitePool, config_hash: ConfigHash) -> Result<Option<i64>, s
 async fn run_query(
     db: &SqlitePool,
     query: Query,
-) -> Result<HashMap<ConfigHash, Vec<FetchRecord>>, sqlx::Error> {
+) -> Result<HashMap<ConfigHash, Vec<PublicFetchRecord>>, sqlx::Error> {
     let records = match query.filter_config {
         Some(config) => {
             let db_config_hash = config as RawConfigHash;
@@ -269,18 +269,18 @@ async fn run_query(
 
         let mut previous_record: Option<FetchRecord> = None;
         for record in matching_records {
-            let fethed_at = record.fetched_at.as_second();
+            let fetched_at = record.fetched_at.as_second();
             println!(
-                "\tevent at {fethed_at}: {:?} {}",
+                "\tevent at {fetched_at}: {:?} {}",
                 record.status, record.source_url
             );
 
             if query.decompress {
                 if let Some(prev) = previous_record {
-                    let mut diff = fethed_at - prev.fetched_at.as_second();
+                    let mut diff = fetched_at - prev.fetched_at.as_second();
                     while diff > (config.fetch_interval_s + 1) {
                         //println!("\t\tfilling diff {diff}");
-                        let new_at = fethed_at - diff + config.fetch_interval_s;
+                        let new_at = fetched_at - diff + config.fetch_interval_s;
 
                         config_records.push(FetchRecord {
                             config: prev.config,
@@ -293,7 +293,7 @@ async fn run_query(
                             valid_json: prev.valid_json,
                         });
 
-                        diff = fethed_at - new_at;
+                        diff = fetched_at - new_at;
                     }
                 }
             }
@@ -304,5 +304,15 @@ async fn run_query(
         records_by_config.insert(config.hash, config_records);
     }
 
-    Ok(records_by_config)
+    Ok(records_by_config
+        .into_iter()
+        .map(|(k, v)| {
+            (
+                k,
+                v.into_iter()
+                    .map(PublicFetchRecord::from)
+                    .collect::<Vec<_>>(),
+            )
+        })
+        .collect())
 }
