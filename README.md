@@ -38,14 +38,16 @@ Opening `http://localhost:8010/` in your browser should give you a list of all c
     - `json` if try_parse_json was set and the endpoint returned valid json
     - `plain_text` otherwise
 - Fetche was down at the time, but according to the config a fetch should've been performed at "fetched_at"
-  - "status.tag" is "Unknown"
+  - `status.tag` is `Unknown`
 - An error occurred while trying to fetch source_url
-  - "status.tag" is "Error"
+  - `status.tag` is `Error`
 
 There are some query options you can set:
 
 - filter_config=SOME_HASH: only return events from config with hash SOME_HASH
 - decompress=true|false: generate datapoints for time periods when nothing changed, by default false
   - generated datapoints are marked with `from_db: false`
+
+For example: `http://localhost:8010/query_list?filter_config=10038156192638179075&decompress=true` (You don't have a config with that hash)
 
 `/query` behaves exactly like `/query_list`, but the results are grouped by config.
