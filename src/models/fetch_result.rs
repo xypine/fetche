@@ -5,8 +5,9 @@ use sqlx::prelude::FromRow;
 use crate::db::RawTimestamp;
 
 use super::config::{ConfigHash, RawConfigHash};
+use super::i64_as_string;
 
-#[derive(Deserialize, Serialize, PartialEq)]
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq)]
 #[serde(tag = "tag", content = "code")]
 pub enum Status {
     /// The source returned an ok http status
@@ -16,7 +17,7 @@ pub enum Status {
     /// No response, probably because fetche or the service was disconnected
     Error,
     /// Fetche was not up at this time - no request was made
-    Unknown
+    Unknown,
 }
 
 #[derive(Deserialize, Serialize, FromRow)]
@@ -50,23 +51,22 @@ impl TryFrom<RawFetchRecord> for FetchRecord {
     fn try_from(raw: RawFetchRecord) -> Result<Self, Self::Error> {
         let status: Status = serde_json::from_str(&raw.status).map_err(|_| ())?;
 
-        Ok(
-            Self {
-                config: raw.config as ConfigHash,
-                fetched_at: Timestamp::new(raw.fetched_at, 0).map_err(|_| ())?,
-                created_at: Timestamp::new(raw.created_at, 0).map_err(|_| ())?,
-                source_url: raw.source_url,
-                status,
-                body_text: raw.body_text,
-                valid_json: raw.valid_json,
-                from_db: true,
-            }
-        )
+        Ok(Self {
+            config: raw.config as ConfigHash,
+            fetched_at: Timestamp::new(raw.fetched_at, 0).map_err(|_| ())?,
+            created_at: Timestamp::new(raw.created_at, 0).map_err(|_| ())?,
+            source_url: raw.source_url,
+            status,
+            body_text: raw.body_text,
+            valid_json: raw.valid_json,
+            from_db: true,
+        })
     }
 }
 
-#[derive(Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct FetchRecord {
+    #[serde(with = "i64_as_string")]
     pub config: ConfigHash,
     pub fetched_at: Timestamp,
     pub created_at: Timestamp,
@@ -80,13 +80,11 @@ pub struct FetchRecord {
 
 impl PartialEq for FetchRecord {
     fn eq(&self, other: &Self) -> bool {
-        return 
-            self.config == other.config
+        return self.config == other.config
             && self.source_url == other.source_url
             && self.status == other.status
             && self.body_text == other.body_text
             && self.valid_json == other.valid_json
-            && self.from_db == other.from_db
-        ;
+            && self.from_db == other.from_db;
     }
 }
