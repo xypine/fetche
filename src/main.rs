@@ -89,13 +89,13 @@ async fn main() {
                         tick_handles.push(handle);
                     }
                     for handle in tick_handles {
-                        let elapsed_opt = handle.await.expect("Panic in task");
-                        if let Some(elapsed) = elapsed_opt {
-                            print!("{elapsed}");
-                        }
-                        print!("\t");
+                        let _elapsed_opt = handle.await.expect("Panic in task");
+                        //if let Some(elapsed) = elapsed_opt {
+                        //    print!("{elapsed}");
+                        //}
+                        //print!("\t");
                     }
-                    println!();
+                    //println!();
                 })
             })
             .expect("Failed to create job"),

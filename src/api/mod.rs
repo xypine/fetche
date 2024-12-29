@@ -13,7 +13,7 @@ pub struct AppState {
 }
 
 pub async fn run_server() -> std::io::Result<()> {
-    println!("Starting API...");
+    println!("listening for api calls on port 8080, press Ctrl+C to stop");
     let conn = connect().await;
     let state = AppState { conn };
     HttpServer::new(move || {

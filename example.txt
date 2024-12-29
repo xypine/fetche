@@ -1,9 +1,0 @@
-25.12.24 18 - OK {12, 15, 0}
-25.12.24 19 - OK {12, 16, 0}
-25.12.24 20 - NODATA (Generated at query if compress = false)
-25.12.24 21 - NODATA (Generated at query if compress = false)
-25.12.24 22 - OK {12, 19, 1}
-25.12.24 23 - ERR 404
-26.12.24 00 - ERR 404 (only generated at query if compress = false)
-26.12.24 01 - ERR 404 (only generated at query if compress = false)
-26.12.24 02 - ERR 401
