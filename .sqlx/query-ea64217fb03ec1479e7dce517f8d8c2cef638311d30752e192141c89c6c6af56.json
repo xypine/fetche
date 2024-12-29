@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "\n                INSERT INTO \"fetch_result\"\n                    (config, fetched_at, created_at, source_url, status, body_text, valid_json)\n                VALUES\n                    ($1, $2, $3, $4, $5, $6, $7)\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 7
+    },
+    "nullable": []
+  },
+  "hash": "ea64217fb03ec1479e7dce517f8d8c2cef638311d30752e192141c89c6c6af56"
+}

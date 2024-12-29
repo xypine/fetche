@@ -1,0 +1,56 @@
+{
+  "db_name": "SQLite",
+  "query": "\n                SELECT * FROM \"fetch_result\"\n                ORDER BY fetched_at ASC\n            ",
+  "describe": {
+    "columns": [
+      {
+        "name": "config",
+        "ordinal": 0,
+        "type_info": "Integer"
+      },
+      {
+        "name": "fetched_at",
+        "ordinal": 1,
+        "type_info": "Integer"
+      },
+      {
+        "name": "created_at",
+        "ordinal": 2,
+        "type_info": "Integer"
+      },
+      {
+        "name": "source_url",
+        "ordinal": 3,
+        "type_info": "Text"
+      },
+      {
+        "name": "status",
+        "ordinal": 4,
+        "type_info": "Text"
+      },
+      {
+        "name": "body_text",
+        "ordinal": 5,
+        "type_info": "Text"
+      },
+      {
+        "name": "valid_json",
+        "ordinal": 6,
+        "type_info": "Bool"
+      }
+    ],
+    "parameters": {
+      "Right": 0
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true
+    ]
+  },
+  "hash": "476062fde669b670567c19862d8e96c69ab827663385f6df05734298373594ac"
+}

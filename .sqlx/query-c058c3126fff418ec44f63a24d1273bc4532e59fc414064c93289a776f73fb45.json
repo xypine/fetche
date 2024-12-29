@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "\n            INSERT INTO \"config\"\n                (hash, source_url, fetch_interval_s, try_parse_json, active)\n            VALUES\n                ($1, $2, $3, $4, $5)\n            ON CONFLICT(hash) DO UPDATE \n                SET active = $5\n        ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 5
+    },
+    "nullable": []
+  },
+  "hash": "c058c3126fff418ec44f63a24d1273bc4532e59fc414064c93289a776f73fb45"
+}

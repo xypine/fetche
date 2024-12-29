@@ -1,0 +1,50 @@
+{
+  "db_name": "SQLite",
+  "query": "\n       SELECT * FROM \"config\"\n    ",
+  "describe": {
+    "columns": [
+      {
+        "name": "hash",
+        "ordinal": 0,
+        "type_info": "Integer"
+      },
+      {
+        "name": "source_url",
+        "ordinal": 1,
+        "type_info": "Text"
+      },
+      {
+        "name": "fetch_interval_s",
+        "ordinal": 2,
+        "type_info": "Integer"
+      },
+      {
+        "name": "try_parse_json",
+        "ordinal": 3,
+        "type_info": "Integer"
+      },
+      {
+        "name": "active",
+        "ordinal": 4,
+        "type_info": "Integer"
+      },
+      {
+        "name": "last_fetched",
+        "ordinal": 5,
+        "type_info": "Integer"
+      }
+    ],
+    "parameters": {
+      "Right": 0
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      true
+    ]
+  },
+  "hash": "0b339232bf1dd1d515fcf7bb8f60841d905eaeb44f8819e16dfc20ae39c9a126"
+}

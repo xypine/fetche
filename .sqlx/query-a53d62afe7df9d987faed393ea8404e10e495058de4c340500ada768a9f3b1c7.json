@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "UPDATE \"config\" SET last_fetched = $2 WHERE hash = $1",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 2
+    },
+    "nullable": []
+  },
+  "hash": "a53d62afe7df9d987faed393ea8404e10e495058de4c340500ada768a9f3b1c7"
+}
