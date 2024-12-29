@@ -80,6 +80,6 @@ async fn query_list(data: web::Data<AppState>, query: web::Query<Query>) -> impl
         .await
         .expect("Failed to run query");
     let mut values: Vec<_> = r.values().flatten().collect();
-    values.sort_by_key(|r| r.created_at);
+    values.sort_by_key(|r| r.fetched_at);
     HttpResponse::Ok().json(values)
 }
