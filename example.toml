@@ -1,6 +1,6 @@
 # Note that changing any value of a config changes it's hash.
 # If the config already had data before the change, that data
-# will persist under the old hash, while any new data will be 
+# will persist under the old hash, while any new data will be
 # recorded under the new hash.
 
 # If you want to combine the data, you will need to do that _manually_.
@@ -16,3 +16,5 @@ try_parse_json = true
 source_url = "https://dummyjson.com/recipes/1"
 # Check for new data every minute
 fetch_interval_s = 60
+# Don't try to parse response - it's still saved in plain text
+try_parse_json = false
